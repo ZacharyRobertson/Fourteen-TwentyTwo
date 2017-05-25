@@ -18,13 +18,12 @@ public class Enemy : MonoBehaviour
     protected virtual void Start()
     {
         patrol = GetComponent<Patrol>();
-        oldSpeed = patrol.movementSpeed;
         slushie = GameObject.FindGameObjectsWithTag("Slushie");
-        slushieSlow = slushie[0].GetComponent<SlushieMachine>();
+        slushieSlow = slushie[0].GetComponentInParent<SlushieMachine>();
         
     }
 
-    void Update()
+    protected virtual void Update()
     {
 
         if (health <= 0)
@@ -48,14 +47,17 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Slushie")
         {
+            oldSpeed = patrol.movementSpeed;
+
+            Debug.Log("We Hit the Slushie");
             patrol.movementSpeed -= slushieSlow.slowSpeed;
         }
     }
 
 
-    public void OnTriggerExit(Collider col)
+    public void OnTriggerExit(Collider other)
     {
-        if (col.tag == "Slushie")
+        if (other.tag == "Slushie")
         {
             patrol.movementSpeed = oldSpeed;
         }

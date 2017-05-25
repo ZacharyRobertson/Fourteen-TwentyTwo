@@ -23,7 +23,7 @@ public class Patrol : MonoBehaviour
 
     void Movement()
     {
-        if (transform.position == Waypoints[currentPoint].position)
+        if (transform.position.x == Waypoints[currentPoint].position.x && transform.position.z == Waypoints[currentPoint].position.z)
         {
             currentPoint++;
         }
