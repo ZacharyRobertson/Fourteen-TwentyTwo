@@ -11,15 +11,17 @@ public class Enemy : MonoBehaviour
     // use this later when we're not using the waypoints 
     // public float speed = 10f;
     public Patrol patrol;
-    public GameObject[] slushie;
+    public GameObject slushie;
     public SlushieMachine slushieSlow;
     public float oldSpeed;
+    public float startSpeed;
 
     protected virtual void Start()
     {
         patrol = GetComponent<Patrol>();
-        slushie = GameObject.FindGameObjectsWithTag("Slushie");
-        slushieSlow = slushie[0].GetComponentInParent<SlushieMachine>();
+       // slushie = GameObject.FindGameObjectsWithTag("Slushie");
+       // slushieSlow = slushie[0].GetComponentInParent<SlushieMachine>();
+        startSpeed = patrol.movementSpeed;
         
     }
 
@@ -47,10 +49,15 @@ public class Enemy : MonoBehaviour
 
         if (other.tag == "Slushie")
         {
-            oldSpeed = patrol.movementSpeed;
+            
+            slushieSlow = other.GetComponentInParent<SlushieMachine>();
+            if (patrol.movementSpeed >= startSpeed)
+            {
+                oldSpeed = patrol.movementSpeed;
 
-            Debug.Log("We Hit the Slushie");
-            patrol.movementSpeed -= slushieSlow.slowSpeed;
+                Debug.Log("We Hit the Slushie");
+                patrol.movementSpeed -= slushieSlow.slowSpeed;
+            }
         }
     }
 
