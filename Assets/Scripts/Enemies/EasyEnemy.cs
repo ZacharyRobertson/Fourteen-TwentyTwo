@@ -9,10 +9,8 @@ public class EasyEnemy : Enemy
     {
         base.Start();
     }
-	void Update () {
-        if (health <= 0)
-        {
-            Death();
-        }
+    protected override void Update()
+    {
+        base.Update();
     }
 }
